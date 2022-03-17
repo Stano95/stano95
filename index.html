@@ -1,99 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
-    <title>Movie Viewer</title>
-
-    <link type="text/css" rel="stylesheet"
-          href="https://cdn.plus4u.net/libs/materialdesignicons/2.0.46/css/materialdesignicons.min.css">
-
-    <script src="https://cdn.plus4u.net/libs/systemjs/0.19.47/system.js"></script>
-
-    <script>
-        SystemJS.config({
-            "paths": {
-                "systemjs": "https://cdn.plus4u.net/libs/systemjs/0.19.47/system.js",
-                "react": "https://cdn.plus4u.net/libs/react/16.8.6/react.min.js",
-                "react-dom": "https://cdn.plus4u.net/libs/react-dom/16.8.6/react-dom.min.js",
-                "create-react-class": "https://cdn.plus4u.net/libs/create-react-class/15.6.3/create-react-class.min.js",
-                "prop-types": "https://cdn.plus4u.net/libs/prop-types/15.7.2/prop-types.min.js",
-
-                "uu5g04": "https://cdn.plus4u.net/uu-uu5g04/1.0.0/uu5g04.min.js",
-                "uu5g04-bricks": "https://cdn.plus4u.net/uu-uu5g04/1.0.0/uu5g04-bricks.min.js",
-                "uu5g04-forms": "https://cdn.plus4u.net/uu-uu5g04/1.0.0/uu5g04-forms.min.js"
-            }
-        });
-    </script>
-
+    <meta charset="UTF-8">
+    <title>Movie countdowner</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h2><span>Countdown to Friends S1/E1</span></h2>
+        <div class="countdown">
+            <div id="day"></div>
+            <div id="hour"></div>
+            <div id="minute"></div>
+            <div id="second"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        let countDate = new Date('Mar 17, 2022 21:10:00').getTime();
+        function hopla(){
+            let now = new Date().getTime();
+            let gap = countDate - now;
 
-<div id="videoPlayer"></div>
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
 
-<script src="https://cdn.plus4u.net/uu-appg01-template/1.0.0/in-browser-transpilation.min.js"></script>
-<script type="text/babel">
-    import UU5 from "uu5g04";
-    import "uu5g04-bricks";
-    import "uu5g04-forms";
+            let d = Math.floor(gap / day);
+            let h = Math.floor((gap % (day)) / (hour));
+            let m = Math.floor((gap % (hour)) / (minute));
+            let s = Math.floor((gap % (minute)) / (second));
 
-    // Set the date we're counting down to
-    let countDownDate = new Date();
-    countDownDate.setMinutes(countDownDate.getMinutes() + 1);
-    countDownDate = countDownDate.getTime();
+            document.getElementById('day').innerText = d;
+            document.getElementById('hour').innerText = h;
+            document.getElementById('minute').innerText = m;
+            document.getElementById('second').innerText = s;
 
-    const VideoPlayer = UU5.Common.VisualComponent.create({
-
-        mixins: [
-            UU5.Common.BaseMixin,
-            UU5.Common.ElementaryMixin,
-            UU5.Forms.FormMixin
-        ],
-
-        componentDidMount() {
-            setInterval(() => {
-
-                // Get today's date and time
-                const now = new Date().getTime();
-
-                // Find the distance between now and the count down date
-                const distance = countDownDate - now;
-
-                // Time calculations for days, hours, minutes and seconds
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                this.setState({
-                    countdown : minutes + "m " + seconds + "s "
-                })
-                if (distance < 0) {
-                    console.log("df")
-                    this.setState({
-                        halabala : true
-                    })
-                }
-            }, 1000)
-        },
-
-        render() {
-            return (
-                <UU5.Bricks.Container>
-                    {this.state.countdown}
-
-                    <video id="v1" width="480px" height="267px" controls onClick="playPause()">
-                        <source src="//adblockstreamtape.art/get_video?id=gd7gqygDjRhq23l&expires=1647254589&ip=GHusF0cnDS9X&token=PuuLjYZeAEwx&stream=1" type="video/mp4"/>
-                    </video>
-
-                    <UU5.Bricks.Video src={"//adblockstreamtape.art/get_video?id=gd7gqygDjRhq23l&expires=1647254589&ip=GHusF0cnDS9X&token=PuuLjYZeAEwx&stream=1"}
-                                      autoPlay={false}>
-                        play={true}
-                    </UU5.Bricks.Video>
-
-                </UU5.Bricks.Container>
-            );
+            if (countDate - now < -100){
+                window.close();
+            }
         }
-    });
-
-    UU5.Common.DOM.render(<VideoPlayer />, document.getElementById('videoPlayer'));
-</script>
+        setInterval(function (){
+            hopla();
+        }, 1000)
+    </script>
 </body>
 </html>
